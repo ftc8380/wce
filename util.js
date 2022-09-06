@@ -123,9 +123,12 @@ function minsRemainingInPeriod(date) {
     // Time until next period starts (if passing period)
     if(periodName === "Passing period") {
         const periods = Object.keys(info.schedule);
-        for(let i = 0; i < periods.length; i++) {
-            if(mins >= info.schedule[periods[i]].end) {
-                return info.schedule[periods[i + 1]].start - mins;
+        for(let i = 0; i < periods.length - 1; i++) {
+            const classEndedAt = info.schedule[periods[i]].end
+            const classWillStartAt = info.schedule[periods[i + 1]].start
+            
+            if((mins >= classEndedAt && mins < classWillStartAt) {
+                return classWillStartAt - mins;
             }
         }
     }
