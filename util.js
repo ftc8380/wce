@@ -62,24 +62,6 @@ const specialDates = {
     "2023-06-14": "finals"
 }
 
-// hh:mm to minutes since midnight
-function toMinutes(time) {
-    const [hours, minutes] = time.split(":");
-    return parseInt(hours) * 60 + parseInt(minutes);
-}
-
-// Actual minutes since midnight
-function minutesSinceMidnight() {
-    const now = new Date();
-    return now.getHours() * 60 + now.getMinutes();
-}
-
-// Pad with zeros if needed
-function yyyymmdd() {
-    const now = new Date();
-    return now.getFullYear() + "-" + (now.getMonth() + 1).toString().padStart(2, "0") + "-" + now.getDate().toString().padStart(2, "0");
-}
-
 /* This turns period hh:mm - hh:mm into minutes since midnight
 "Period 1": "8:45 - 9:42" --> "Period 1": {"start": 525, "end": 582} */
 const scheduleTimes = Object.assign({}, schedules);
@@ -97,22 +79,29 @@ for(const dayOfWeek in schedules) {
     }
 }
 
-// Find when class ends
-const whatKindOfDay = specialDates[yyyymmdd()] || "default";
-const daySchedule = scheduleTimes[whatKindOfDay];
+function getScheduleInfo(date) {
+    const dayType = specialDates[yyyymmdd(date)] || "default";
+    const daySchedule = scheduleTimes[dayType];
 
-const schoolDayStart = Object.values(daySchedule)[0].start;
-const schoolDayEnd = Object.values(daySchedule)[Object.keys(daySchedule).length - 1].end;
+    return {
+        "type": dayType,
+        "schedule": daySchedule,
+        "start": daySchedule[Object.keys(daySchedule)[0]].start,
+        "end": daySchedule[Object.keys(daySchedule)[Object.keys(daySchedule).length - 1]].end
+    }
+}
 
 // Find the current period, passing period if between periods
-function getPeriodName(mins) {
+function getPeriodName(date) {
+    const info = getScheduleInfo(date);
+    const mins = minutesSinceMidnight(date);
 
-    if(mins < schoolDayStart || mins >= schoolDayEnd) {
+    if(mins < info.start || mins >= info.end) {
         return "None";
     }
 
-    for(const period in daySchedule) {
-        const periodTimes = daySchedule[period];
+    for(const period in info.schedule) {
+        const periodTimes = info.schedule[period];
         if(mins >= periodTimes.start && mins < periodTimes.end) {
             return period;
         }
@@ -121,33 +110,33 @@ function getPeriodName(mins) {
     return "Passing period";
 }
 
-function minsRemainingInPeriod(mins) {
-    const periodName = getPeriodName(mins);
+function minsRemainingInPeriod(date) {
+    const info = getScheduleInfo(date);
+    const mins = minutesSinceMidnight(date);
+    const periodName = getPeriodName(date);
 
-    // If school starts in under an hour
+    // If school starts in under an hour, return minutes until school starts
     if(periodName === "None") {
-        return mins >= schoolDayStart - 60 && mins < schoolDayStart ? schoolDayStart - mins : 0;
+        return mins >= info.start - 60 && mins < info.start ? info.start - mins : 0;
     }
 
     // Time until next period starts (if passing period)
     if(periodName === "Passing period") {
-        const periods = Object.keys(daySchedule);
+        const periods = Object.keys(info.schedule);
         for(let i = 0; i < periods.length; i++) {
-            if(mins >= daySchedule[periods[i]].end) {
-                return daySchedule[periods[i + 1]].start - mins;
+            if(mins >= info.schedule[periods[i]].end) {
+                return info.schedule[periods[i + 1]].start - mins;
             }
         }
     }
 
     // In any other case, return time until period ends
-    const periodTimes = daySchedule[periodName];
-    return periodTimes.end - mins;
+    return info.schedule[periodName].end - mins;
 }
 
-function getCurrentPeriod() {
-    const mins = minutesSinceMidnight();
+function getCurrentPeriod(date) {
     return {
-        period: getPeriodName(mins),
-        timeRemaining: minsRemainingInPeriod(mins)
+        period: getPeriodName(date),
+        timeRemaining: minsRemainingInPeriod(date)
     };
 }
