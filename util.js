@@ -127,7 +127,7 @@ function minsRemainingInPeriod(date) {
             const classEndedAt = info.schedule[periods[i]].end
             const classWillStartAt = info.schedule[periods[i + 1]].start
             
-            if((mins >= classEndedAt && mins < classWillStartAt) {
+            if(mins >= classEndedAt && mins < classWillStartAt) {
                 return classWillStartAt - mins;
             }
         }
