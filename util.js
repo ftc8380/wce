@@ -35,6 +35,16 @@ const schedules = {
         "Period 4": "13:09 - 13:54",
         "Period 5": "14:00 - 14:45",
         "Period 6": "14:51 - 15:36"
+    },
+
+    "club_rush": {
+        "Period 1": "08:45 - 09:42",
+        "Period 2": "09:48 - 10:45",
+        "Period 3": "10:51 - 11:41",
+        "Lunch": "11:47 - 12:32",
+        "Period 4": "12:38 - 13:30",
+        "Period 5": "13:36 - 14:33",
+        "Period 6": "14:39 - 15:36"
     }
 
 }
@@ -43,6 +53,7 @@ const schedules = {
 const specialDates = {
     "2022-09-12": "modified",
     "2022-09-19": "modified",
+    "2022-09-23": "club_rush",
     "2022-09-26": "modified",
     "2022-10-03": "modified",
     "2022-10-17": "modified",
