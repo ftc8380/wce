@@ -28,13 +28,14 @@ const schedules = {
     },
 
     "pep_rally": {
-        "Period 1": "08:45 - 09:30",
-        "Period 2": "09:36 - 11:36",
-        "Period 3": "11:42 - 12:27",
-        "Lunch": "12:33 - 13:03",
-        "Period 4": "13:09 - 13:54",
-        "Period 5": "14:00 - 14:45",
-        "Period 6": "14:51 - 15:36"
+        "Period 1": "08:45 - 09:26",
+        "Period 2": "09:32 - 10:13",
+        "Period 3/Rally 1": "10:19 - 11:24",
+        "Period 3/Rally 2": "11:29 - 12:39",
+        "Lunch": "12:45 - 13:15",
+        "Period 4": "13:21 - 14:02",
+        "Period 5": "14:08 - 14:49",
+        "Period 6": "14:55 - 15:36"
     },
 
     "club_rush": {
@@ -51,10 +52,7 @@ const schedules = {
 
 // On all other days, "default" schedule is used
 const specialDates = {
-    "2022-09-12": "modified",
-    "2022-09-19": "modified",
-    "2022-09-23": "club_rush",
-    "2022-09-26": "modified",
+    "2022-09-30": "pep_rally",
     "2022-10-03": "modified",
     "2022-10-17": "modified",
     "2022-11-07": "modified",
