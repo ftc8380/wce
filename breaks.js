@@ -7,8 +7,8 @@ function getFederalHolidays(year) {
     const fixed = ["01-01", "06-19", "07-04", "11-11", "12-25"];
 
     /* Formatting: "number dayofweek month" or "last dayofweek month"
-                            MLK day             Presidents day        Memorial day          Labor day             Columbus day           Thanksgiving */
-    const floating = ["3rd monday january", "3rd monday february", "last monday may", "1st monday september", "2nd monday october", "4th thursday november"];
+                            MLK day             Presidents day        Memorial day          Labor day               Thanksgiving */
+    const floating = ["3rd monday january", "3rd monday february", "last monday may", "1st monday september", "4th thursday november"];
 
     const yyyymmddArr = fixed.map(x => year.toString() + "-" + x);
 
