@@ -45,6 +45,7 @@ const schedules = {
 const specialDates = {
     "2022-10-20": "earthquake_drill",
     "2022-11-07": "modified",
+    "2022-11-28": "modified",
     "2022-12-05": "modified",
     "2023-01-09": "modified",
     "2023-01-18": "finals",
